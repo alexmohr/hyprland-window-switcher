@@ -40,7 +40,7 @@ fn main() -> anyhow::Result<()> {
         })
         .collect();
 
-    let mut wofi = Command::new("wofi")
+    let mut wofi = Command::new("worf")
         .arg("--show=dmenu")
         .arg("--prompt=Focus Window")
         .arg("-i")
@@ -50,6 +50,7 @@ fn main() -> anyhow::Result<()> {
         .expect("Failed to start wofi");
     if let Some(mut stdin) = wofi.stdin.take() {
         for option in wofi_windows {
+            log::debug!("adding window {option}");
             if let Err(e) = stdin.write(format!("{option}\n").as_bytes()) {
                 error!("failed to write data to wofi stdin{e}");
             }
